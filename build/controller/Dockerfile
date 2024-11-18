@@ -7,6 +7,8 @@ RUN mkdir -p ${OUTDIR}/usr/local/bin/
 WORKDIR /workspace
 ADD . /workspace/
 
+ENV GOPROXY=https://goproxy.cn 
+
 RUN make controller
 RUN mv /workspace/bin/cmd/controller ${OUTDIR}/usr/local/bin/openelb-controller
 

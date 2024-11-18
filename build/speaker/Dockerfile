@@ -6,6 +6,8 @@ RUN mkdir -p ${OUTDIR}/usr/local/bin/
 WORKDIR /workspace
 ADD . /workspace/
 
+ENV GOPROXY=https://goproxy.cn 
+
 RUN make speaker
 RUN mv /workspace/bin/cmd/speaker ${OUTDIR}/usr/local/bin/openelb-speaker
 RUN GO111MODULE=on CGO_ENABLED=0 go install -ldflags '-w -s' github.com/osrg/gobgp/cmd/gobgp
