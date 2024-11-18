@@ -47,6 +47,17 @@ OpenELB 项目最初由 [KubeSphere 社区](https://kubesphere.io) 发起，目�
 
 您可以按照[OpenELB 文档](https://openelb.io/docs/)中的步骤来学习如何在云服务 K8S 中部署 OpenELB。
 
+
+## build 
+
+docker build -f build/speaker/Dockerfile -t kubesphere/openelb-speaker .
+
+docker build -f build/controller/Dockerfile -t kubesphere/openelb-controller .
+
+docker build -f build/forward/Dockerfile -t kubesphere/openelb-forward .
+
+docker build -f build/proxy/Dockerfile -t kubesphere/openelb-proxy .
+
 ## 采用者
 
 OpenELB 已经被采用在[很多公司](./ADOPTERS.md)，如果您也正在使用 OpenELB，欢迎加入到用户社区并且把您所在组织或企业的 Logo 添加到[采用者列表](./ADOPTERS.md)！
