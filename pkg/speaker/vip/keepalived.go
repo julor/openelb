@@ -258,9 +258,10 @@ func (k *keepAlived) ConfigureWithEIP(config speaker.Config, deleted bool) error
 		return err
 	}
 	config.Iface = netif.Name
-	if err := speaker.ValidateInterface(netif, config.IPRange); err != nil {
-		return err
-	}
+
+	// if err := speaker.ValidateInterface(netif, config.IPRange); err != nil {
+	// 	return err
+	// }
 
 	if deleted {
 		delete(k.configs, config.Name)

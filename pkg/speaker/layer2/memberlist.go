@@ -156,9 +156,9 @@ func (l *layer2Speaker) ConfigureWithEIP(config speaker.Config, deleted bool) er
 		return err
 	}
 
-	if err := speaker.ValidateInterface(netif, config.IPRange); err != nil {
-		return err
-	}
+	// if err := speaker.ValidateInterface(netif, config.IPRange); err != nil {
+	// 	return err
+	// }
 
 	if deleted {
 		return l.unregisterAnnouncer(config.Name, netif.Name)
