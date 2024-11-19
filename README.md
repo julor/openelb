@@ -45,6 +45,16 @@ In cloud-based Kubernetes clusters, Services are usually exposed by using load b
 
 You can learn how to use OpenELB in a cloud-based Kubernetes cluster by following the [OpenELB Documentation](https://openelb.io/docs/).
 
+## build 
+
+docker build -f build/speaker/Dockerfile -t kubesphere/openelb-speaker .
+
+docker build -f build/controller/Dockerfile -t kubesphere/openelb-controller .
+
+docker build -f build/forward/Dockerfile -t kubesphere/openelb-forward .
+
+docker build -f build/proxy/Dockerfile -t kubesphere/openelb-proxy .
+
 ## Adopters
 
 OpenELB has been adopted by [many companies](./ADOPTERS.md) all over the world. If you are using OpenELB in your organization, welcome to join the end user community and add your logo to the [list](./ADOPTERS.md)!
