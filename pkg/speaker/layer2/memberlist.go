@@ -112,7 +112,7 @@ func (l *layer2Speaker) SetBalancer(ip string, clusterNodes []corev1.Node) error
 
 			klog.Infof("[%s] wins the right to announce the IP address %s", nodes[0], ip)
 			if nodes[0] != util.GetNodeName() {
-				return nil
+				return a.DelAnnouncedIP(net.ParseIP(ip))
 			}
 			return a.AddAnnouncedIP(net.ParseIP(ip))
 		}

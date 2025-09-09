@@ -149,6 +149,7 @@ func (a *arpAnnouncer) gratuitous(ip net.IP) error {
 	}
 
 	a.setMac(ip.String(), a.intf.HardwareAddr)
+	klog.V(4).Infof("arp Announcer ip-mac recoreds:#%v", a.ip2mac)
 	klog.Infof("store ingress ip related mac: %s-%s", ip.String(), a.intf.HardwareAddr.String())
 	for _, op := range []arp.Operation{arp.OperationRequest, arp.OperationReply} {
 		klog.Infof("send gratuitous arp packet: %s-%s", ip, a.intf.HardwareAddr)
@@ -183,6 +184,7 @@ func (a *arpAnnouncer) DelAnnouncedIP(ip net.IP) error {
 	defer a.lock.Unlock()
 
 	delete(a.ip2mac, ip.String())
+	klog.V(4).Infof("arp Announcer ip-mac recoreds:#%v", a.ip2mac)
 	metrics.DeleteLayer2Metrics(ip.String())
 
 	return nil

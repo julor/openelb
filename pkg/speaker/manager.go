@@ -305,17 +305,16 @@ func (m *Manager) HandleService(ctx context.Context, svc *corev1.Service) error 
 
 	ingress := map[string]string{}
 	for _, ip := range svc.Status.LoadBalancer.Ingress {
+		// NOTE: when value == svc.GetNamespace()+"/"+svc.GetName(), it cannot be skipped
+		// Skipping this step is impermissible, as it will result in routing configurations failing to take effect
+		// following endpoint modifications.
 		value, ok := eip.Status.Used[ip.IP]
-		if value == svc.GetNamespace()+"/"+svc.GetName() {
-			continue
-		}
-
-		if ok {
-			value += ";"
+		if ok && value != svc.GetNamespace()+"/"+svc.GetName() {
+			value += ";" + svc.GetNamespace() + "/" + svc.GetName()
 		}
 
 		if addr.Contains(net.ParseIP(ip.IP)) {
-			ingress[ip.IP] = value + svc.GetNamespace() + "/" + svc.GetName()
+			ingress[ip.IP] = value
 		}
 	}
 

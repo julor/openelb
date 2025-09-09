@@ -2,15 +2,16 @@ package layer2
 
 import (
 	"fmt"
+	"io"
+	"net"
+	"net/netip"
+	"sync"
+
 	"github.com/mdlayher/ndp"
 	"github.com/openelb/openelb/pkg/metrics"
 	"github.com/openelb/openelb/pkg/util/iprange"
 	"github.com/vishvananda/netlink"
-	"io"
 	"k8s.io/klog/v2"
-	"net"
-	"net/netip"
-	"sync"
 )
 
 type ndpAnnouncer struct {
@@ -77,6 +78,7 @@ func (n *ndpAnnouncer) DelAnnouncedIP(ip net.IP) error {
 	}
 
 	delete(n.ip2mac, ip.String())
+	klog.V(4).Infof("ndp Announcer ip-mac recoreds:#%v", n.ip2mac)
 	metrics.DeleteLayer2Metrics(ip.String())
 
 	return nil
@@ -262,6 +264,7 @@ func (n *ndpAnnouncer) Gratuitous(ip netip.Addr) error {
 	}
 
 	n.setMac(ip.String(), n.intf.HardwareAddr)
+	klog.V(4).Infof("arp Announcer ip-mac recoreds:#%v", n.ip2mac)
 	klog.Infof("store ingress ip related node ip and mac. %s-%s", ip.String(), n.intf.HardwareAddr.String())
 
 	addr, err := netip.ParseAddr(net.IPv6linklocalallnodes.String())
